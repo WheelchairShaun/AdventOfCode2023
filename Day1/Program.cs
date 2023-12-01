@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
+using System.Text.RegularExpressions;
 
 namespace Day1;
 
@@ -34,13 +36,56 @@ public class Program
 
 	private static int ParseCalibrationFromLine(string line)
 	{
-		char[] numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+		string pattern = @"([1-9]|one|two|three|four|five|six|seven|eight|nine)";
 
-		var first = line[line.IndexOfAny(numbers)];
-		var second = line[line.LastIndexOfAny(numbers)];
+		//var matches = Regex.Matches(line, pattern);
 
-		var result = int.Parse(String.Concat(first, second));
+		var first = ConvertWordToDigit(Regex.Match(line, pattern).Value);
+		var last = ConvertWordToDigit(Regex.Match(line, pattern, RegexOptions.RightToLeft).Value);
+		var result = int.Parse(first + last);
 
 		return result;
+	}
+
+	private static string ConvertWordToDigit(string input)
+	{
+		if (input.Length == 1)
+		{
+			return input;
+		}
+
+		switch (input)
+		{
+			case "one":
+				input = "1";
+				break;
+			case "two": 
+				input = "2"; 
+				break;
+			case "three":
+				input = "3";
+				break;
+			case "four":
+				input = "4";
+				break;
+			case "five":
+
+				input = "5";
+				break;
+			case "six":
+				input = "6";
+				break;
+			case "seven":
+				input = "7";
+				break;
+			case "eight":
+				input = "8";
+				break;
+			case "nine":
+				input = "9";
+				break;
+		};
+
+		return input;
 	}
 }
