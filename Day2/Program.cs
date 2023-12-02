@@ -15,6 +15,29 @@ public class Day2
 									 .Sum(g => g.Id);
 
 		Console.WriteLine($"The sum of possible games in Part 1 is {possibleGamesSum}.");
+
+		var sumOfPowers = CalculateSumOfPowers();
+
+		Console.WriteLine($"The sum of the power of the minimum set of cubes in Part 2 is {sumOfPowers}.");
+	}
+
+	private static int CalculateSumOfPowers()
+	{
+		int result = 0;
+
+		foreach (Game game in _games)
+		{
+			int minGems = 1;
+
+			foreach (int gem in game.MinimumGems()) 
+			{
+				minGems *= gem;
+			}
+
+			result += minGems;
+		}
+
+		return result;
 	}
 
 	private static void ReadGamesFromFile()

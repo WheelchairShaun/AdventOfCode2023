@@ -43,5 +43,29 @@ namespace Day2
 			Rounds.Add(round);
 		}
 
+		public int[] MinimumGems()
+		{
+			int red = 0, green = 0, blue = 0;
+
+			foreach(Round round in Rounds)
+			{
+				if (round.Red > red)
+				{
+					red = round.Red;
+				}
+
+				if (round.Green > green)
+				{
+					green = round.Green;
+				}
+
+				if(round.Blue > blue)
+				{
+					blue = round.Blue;
+				}
+			}
+
+			return new int[] { red, green, blue };
+		}
 	}
 }
