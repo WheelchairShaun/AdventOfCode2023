@@ -41,7 +41,7 @@ namespace Day4
 
 		public int GetScore()
 		{
-			int n = Numbers.Intersect(WinningNumbers).Count();
+			int n = GetMatchesCount();
 
 			if (n > 0)
 			{
@@ -50,5 +50,19 @@ namespace Day4
 
 			return 0;
 		}
+
+		public int GetMatchesCount()
+		{
+			return Numbers.Intersect(WinningNumbers).Count();
+		}
+
+		private int _instances = 1;
+
+		public int Instances
+		{
+			get { return _instances; }
+			set { _instances = value; }
+		}
+
 	}
 }

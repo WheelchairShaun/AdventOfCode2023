@@ -10,6 +10,49 @@ internal class Program
 
 		var worth = cards.Sum(c => c.GetScore());
 		Console.WriteLine($"The scratchcards are worth {worth} points.");
+
+		var totalCards = CalculateTotalScratchCards();
+		Console.WriteLine($"You end up with {totalCards} scratchcards.");
+	}
+
+	private static int CalculateTotalScratchCards()
+	{
+		int total = 0;
+
+		var winners = GetWinners(cards);
+
+		foreach( var winner in winners )
+		{
+			for( int i = 0; i < winner.Instances; i++ )
+			{
+				AddCopies(winner);
+			}
+			
+		}
+
+		total = cards.Sum(c => c.Instances);
+
+		return total;
+
+	}
+
+	private static void AddCopies(ScratchCard card)
+	{
+		int n = card.GetMatchesCount();
+		int id = card.Id;
+
+		for( int i = 0; i < n; i++ )
+		{
+			if (id + i < cards.Count)
+			{
+				cards[id + i].Instances++;
+			}
+		}
+	}
+
+	private static List<ScratchCard> GetWinners(List<ScratchCard> scratchCards)
+	{
+		return scratchCards.Where(c => c.GetMatchesCount() > 0).ToList();
 	}
 
 	private static int ReadCardId(string input)
