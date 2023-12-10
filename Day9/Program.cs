@@ -7,34 +7,40 @@ ReadHistoryFromFile();
 
 var one = readings.Sum(r => ExtrapolateNextValue(r));
 
-Console.WriteLine($"Part 1: {one}");
+Console.WriteLine($"The sum of these extrapolated values from Part 1 is {one}.");
 
 var two = readings.Sum(r => ExtrapolatePreviousValue(r));
 
-Console.WriteLine($"Part 2: {two}");
+Console.WriteLine($"The sum of these extrapolated values from Part 2 is {two}.");
 
 int ExtrapolateNextValue(IList<int> numbers)
 {
-	if (numbers.All(x => x == 0))
+	if (AreAllNumbersZero(numbers))
 	{
 		return 0;
 	}
 
-	var differences = numbers.Skip(1).Select((x, i) => x - numbers[i]).ToArray();
-
-	return numbers[^1] + ExtrapolateNextValue(differences);
+	return numbers[^1] + ExtrapolateNextValue(GetDifferences(numbers));
 }
 
 int ExtrapolatePreviousValue(IList<int> numbers)
 {
-	if (numbers.All(x => x == 0))
+	if (AreAllNumbersZero(numbers))
 	{
 		return 0;
 	}
 
-	var differences = numbers.Skip(1).Select((x, i) => x - numbers[i]).ToArray();
+	return numbers[0] - ExtrapolatePreviousValue(GetDifferences(numbers));
+}
 
-	return numbers[0] - ExtrapolatePreviousValue(differences);
+bool AreAllNumbersZero(IList<int> numbers)
+{
+	return numbers.All(x => x == 0);
+}
+
+IList<int> GetDifferences(IList<int> numbers)
+{
+	return numbers.Skip(1).Select((x, i) => x - numbers[i]).ToArray();
 }
 
 void ReadHistoryFromFile()
