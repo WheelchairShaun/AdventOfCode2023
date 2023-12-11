@@ -8,18 +8,20 @@ namespace Day10
 {
 	public class Pipe
 	{
-		public Pipe(char piece)
+		public Pipe(char piece, int row, int col)
 		{
 			Piece = piece;
+			Coordinates = (row, col);
 
 			ConvertPieceToDirections();
 		}
 
 		public char Piece { get; }
 
-		public bool Traversed { get; set; } = false;
+		public (int y, int x) Coordinates { get; set; } = (-1, -1);
 
 		public bool StartPoint { get; set; } = false;
+		public bool Traversed { get; set; } = false;
 
         public bool MoveNorth { get; set; } = false;
 		public bool MoveSouth { get; set; } = false;
