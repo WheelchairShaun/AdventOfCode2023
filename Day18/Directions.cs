@@ -15,12 +15,16 @@
 			switch (direction)
 			{
 				case 'U':
+				case '3':
 					return Up;
 				case 'R':
+				case '0':
 					return Right;
 				case 'D':
+				case '1':
 					return Down;
 				case 'L':
+				case '2':
 					return Left;
 				default:
 					return (0, 0);

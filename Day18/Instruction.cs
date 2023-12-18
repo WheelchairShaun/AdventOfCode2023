@@ -9,15 +9,27 @@ namespace Day18
 {
 	public class Instruction
 	{
-        public (int x, int y) Direction { get; set; }
-        public int Meters { get; set; }
-        public string HexColor { get; set; } = string.Empty;
+        public (long x, long y) Direction { get; set; }
+		public (long x, long y) CorrectedDirection { get; set; }
+		public long Meters { get; set; }
+		public long CorrectedMeters { get; set; }
+		public string HexColor { get; set; } = string.Empty;
 
-        public Instruction(char direction, int meters, string hexColor)
+        public Instruction(char direction, long meters, string hexColor)
         {
 			Direction = Directions.ParseDirection(direction);
 			Meters = meters;
 			HexColor = hexColor;
-        }
-    }
+
+			DecipherHexColor(HexColor);
+
+		}
+
+		private void DecipherHexColor(string hexColor)
+		{
+			var h = hexColor.Remove(0, 1);
+			CorrectedDirection = Directions.ParseDirection(h[^1]);
+			CorrectedMeters = Convert.ToInt64(h.Substring(0, h.Length - 1), 16);
+		}
+	}
 }
